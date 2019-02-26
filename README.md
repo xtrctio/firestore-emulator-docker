@@ -10,7 +10,7 @@ This image is a fork from [Perrystallings work](https://github.com/perrystalling
 docker run \
   --name firestore-emulator \
   -v ${PWD}/firestore-data:/opt/data \
-  -e FIRESTORE_PROJECT_ID=project-test \
+  -e "FIRESTORE_PROJECT_ID=project-test" \
   -p 8080:8080 \
   -d \
   pathmotion/firestore-emulator-docker
