@@ -2,6 +2,38 @@
 
 A [Google Cloud Firestore Emulator](https://cloud.google.com/sdk/gcloud/reference/beta/emulators/firestore/) container image. The image is meant to be used for creating an standalone emulator for testing.
 
+This image is a fork from [Perrystallings work](https://github.com/perrystallings/firestore-emulator-docker), which is a fork of [SingularitiesCR work on the Datastore Emulator](https://github.com/SingularitiesCR/datastore-emulator-docker).
+
+## Quickstart
+
+```BASH
+docker run \
+  --name firestore-emulator \
+  -v ./firestore-data:/opt/data \
+  -d \
+  pathmotion/firestore-emulator-docker
+```
+
+or with compose
+
+```YAML
+version: "2"
+
+services:
+  firestore-emulator:
+    image: pathmotion/cloud-firestore-emulator
+    volumes:
+      - firestore-data:/opt/data
+    environment:
+      - FIRESTORE_PROJECT_ID=project-test
+  app:
+    image: your-app-image
+    environment:
+      - FIRESTORE_EMULATOR_HOST=firestore
+      - FIRESTORE_PROJECT_ID=project-test
+```
+
+
 ## Environment
 
 The following environment variables must be set:
@@ -14,6 +46,12 @@ The following environment variables need to be set so your application connects 
 
 - `FIRESTORE_EMULATOR_HOST`: The listen address used by the emulator (ie. `firestore-emulator:8080`)
 - `FIRESTORE_PROJECT_ID`: The ID of the Google Cloud project used by the emulator.
+
+## Data persistance
+
+Data is saved in the `/opt/data` directory on the container.
+
+You can mount a volume on it.
 
 ## Custom commands
 
@@ -40,6 +78,8 @@ version: "2"
 services:
   firestore:
     image: perrystallings/cloud-firestore-emulator
+    volumes:
+      - firestore-data:/opt/data
     environment:
       - FIRESTORE_PROJECT_ID=project-test
   app:
