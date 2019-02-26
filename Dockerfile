@@ -3,7 +3,6 @@ ARG GCLOUD_SDK_VERSION=alpine
 
 # Use google cloud sdk
 FROM google/cloud-sdk:$GCLOUD_SDK_VERSION
-MAINTAINER perrystallings
 
 # Install Java 8 for Datastore emulator
 RUN apk add --update --no-cache openjdk8-jre &&\
