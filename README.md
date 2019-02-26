@@ -9,7 +9,9 @@ This image is a fork from [Perrystallings work](https://github.com/perrystalling
 ```BASH
 docker run \
   --name firestore-emulator \
-  -v ./firestore-data:/opt/data \
+  -v ${PWD}/firestore-data:/opt/data \
+  -e FIRESTORE_PROJECT_ID=project-test \
+  -p 8080:8080 \
   -d \
   pathmotion/firestore-emulator-docker
 ```
@@ -39,6 +41,10 @@ services:
 The following environment variables must be set:
 
 - `FIRESTORE_PROJECT_ID`: The ID of the Google Cloud project for the emulator.
+
+## Networking
+
+The emulator listens on port `8080`
 
 ## Connect application with the emulator
 
